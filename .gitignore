@@ -8,3 +8,4 @@ coverage.data
 cache/*
 spec/file_fixtures/*
 Gemfile.lock
+.rvmrc
