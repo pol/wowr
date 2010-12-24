@@ -20,6 +20,7 @@ module Wowr
       include GuildBank
       include Guilds
       include Items
+      include GuildNews
 
       # @param [Hash] options
       # @option options [String] :character_name

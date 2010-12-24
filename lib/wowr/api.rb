@@ -10,6 +10,7 @@ module Wowr
     autoload :GuildBank,  'wowr/api/guild_bank'
     autoload :Guilds,     'wowr/api/guilds'
     autoload :Items,      'wowr/api/items'
+    autoload :GuildNews,  'wowr/api/guild_news'
 
     # Returns a new instance of Wowr::API::API
     def self.new(options = {})
