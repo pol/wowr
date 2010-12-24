@@ -13,13 +13,14 @@ module Wowr
 
       def self.included(base)
         base.class_eval do
-          @@armory_base_url   = 'wowarmory.com/'.freeze
-          @@login_base_url    = 'battle.net/'.freeze
-          @@login_url         = 'login/login.xml'.freeze
-          @@persistent_cookie = 'COM-warcraft'.freeze
-          @@temporary_cookie  = 'JSESSIONID'.freeze
+          @@battle_net_base_url   = 'us.battle.net/wow/en/'
+          @@armory_base_url       = 'www.wowarmory.com/'.freeze
+          @@login_base_url        = 'www.battle.net/'.freeze
+          @@login_url             = 'login/login.xml'.freeze
+          @@persistent_cookie     = 'COM-warcraft'.freeze
+          @@temporary_cookie      = 'JSESSIONID'.freeze
 
-          @@max_connection_tries = 10.freeze
+          @@max_connection_tries  = 10.freeze
 
           @@cache_directory_path  = 'cache/'
           @@failed_cache_timeout  = (60*60*24)
@@ -50,12 +51,10 @@ module Wowr
           str += 'http://'
         end
 
-        # No more language-specific subdomains
-        # Language is handled in a cookie
-        str += "www."
-
         if (options[:login] == true)
           str += @@login_base_url
+        # elsif (options[:battle_net] == true)
+        #   str += @@battle_net_base_url
         else
           str += @@armory_base_url
         end

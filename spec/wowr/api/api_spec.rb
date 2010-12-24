@@ -7,7 +7,7 @@ describe Wowr::API::API, "class accessors" do
     subject::VERSION.should_not be_nil
   end
 
-  its(:armory_base_url)          { should eql('wowarmory.com/') }
+  its(:armory_base_url)          { should eql('www.wowarmory.com/') }
   its(:search_url)               { should eql('search.xml') }
   its(:character_sheet_url)      { should eql('character-sheet.xml') }
   its(:character_talents_url)    { should eql('character-talents.xml') }
