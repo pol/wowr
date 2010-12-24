@@ -144,6 +144,10 @@ namespace :file_fixtures do
         {:r => '_data/dungeons',      :l => 'dungeons'},
         {:r => 'data/dungeonStrings', :l => 'dungeonStrings'},
       ],
+      'guild-news' => [
+        {:r => 'the-scryers/rotten%20luck', :l => 'rotten_luck_the_scryers'},
+        {:r => 'the-scryers/', :l => 'not_found'},
+        ]
     }
   end
 
@@ -153,6 +157,8 @@ namespace :file_fixtures do
         # Dungeons are a special case
         if folder == 'dungeons'
           remote = "http://www.wowarmory.com/#{hash[:r]}.xml"
+        elsif folder == 'guild-news'
+          remote = "http://us.battle.net/wow/en/guild/#{hash[:r]}/news"
         else
           remote = "http://www.wowarmory.com/#{folder}.xml?#{hash[:r]}"
         end
