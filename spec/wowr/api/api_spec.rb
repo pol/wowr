@@ -412,13 +412,10 @@ describe Wowr::API::API do
       expect { api.get_guild('Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
     end
 
-    it "should return an instance of GuildNews when given valid parameters"
-    
-
-    it "should return an instance of FullGuild when given valid parameters" # do
-    #       FakeWeb.register_uri(:get, /guild-info\.xml.*Juggernaut/, :body => file_fixture('armory/guild-info/juggernaut_mal_ganis.xml'))
-    #       api.get_guild(:guild_name => 'Juggernaut', :realm => "Mal'Ganis").should be_kind_of(Wowr::Classes::FullGuild)
-    #     end
+    it "should return an instance of GuildNews when given valid parameters" do
+      FakeWeb.register_uri(:get, /guild\/the-scryers\/rotten%20luck/, :body => file_fixture('armory/guild-news/rotten_luck_the_scryers.xml'))
+      api.get_guild_news(:guild_name => 'Rotten Luck', :realm => "The Scryers").should be_kind_of(Wowr::Classes::GuildNews)
+    end
 
     it "should raise GuildNotFound when given an invalid guild" # do
     #       FakeWeb.register_uri(:get, /the-scryers\/\/guild-info\.xml/, :body => file_fixture('armory/guild-info/not_found.xml'))
