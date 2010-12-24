@@ -6,7 +6,7 @@ module Wowr
       @@search_url = 'search.xml'.freeze
       cattr_reader :search_url
 
-      attr_accessor :character_name, :guild_name, :realm, :lang, :caching, :cache_timeout, :debug
+      attr_accessor :character_name, :guild_name, :realm, :lang, :caching, :cache_timeout, :debug, :battle_net
 
       # @deprecated
       attr_accessor :locale
@@ -37,6 +37,7 @@ module Wowr
         @caching        = options[:caching].nil? ? true : options[:caching]
         @cache_timeout  = options[:cache_timeout] || (7*24*60*60)
         @debug          = options[:debug] || false
+        @battle_net     = options[:battle_net] || false
       end
 
       # General-purpose search

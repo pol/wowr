@@ -30,6 +30,8 @@ describe Wowr::API::API, "class accessors" do
   its(:calendar_detail_url)      { should eql('vault/calendar/detail.json') }
   its(:persistent_cookie)        { should eql('COM-warcraft') }
   its(:temporary_cookie)         { should eql('JSESSIONID') }
+  its(:battle_net_base_url)      { should eql('us.battle.net/wow/en/') }
+  its(:guild_news_url)           { should eql('guild/%s/%s/news') }
 end
 
 describe Wowr::API::API, "initialization" do
@@ -43,7 +45,7 @@ describe Wowr::API::API, "initialization" do
   end
 
   context "with options" do
-    let(:options) { {:character_name => 'WoW_Toon', :guild_name => 'WoW_Guild', :realm => 'WoW_Realm', :locale => 'uk', :lang => 'English', :caching => false, :cache_timeout => 1600, :debug => true} }
+    let(:options) { {:character_name => 'WoW_Toon', :guild_name => 'WoW_Guild', :realm => 'WoW_Realm', :locale => 'uk', :lang => 'English', :caching => false, :cache_timeout => 1600, :debug => true, :battle_net => true} }
     subject { Wowr::API.new(options) }
 
     its(:character_name) { should eql(options[:character_name]) }
@@ -53,6 +55,7 @@ describe Wowr::API::API, "initialization" do
     its(:caching)        { should eql(options[:caching]) }
     its(:cache_timeout)  { should eql(options[:cache_timeout]) }
     its(:debug)          { should eql(options[:debug]) }
+    its(:battle_net)     { should eql(options[:battle_net])}
   end
 end
 
@@ -400,6 +403,30 @@ describe Wowr::API::API do
 
   end
 
+  describe "#get_guild_news" do
+    it "should raise GuildNameNotSet when not given a name" # do
+    #       expect { api.get_guild_news({}) }.to raise_error(Wowr::Exceptions::GuildNameNotSet)
+    #     end
+    
+    it "should raise RealmNotSet when given a guild name but not a realm" # do
+    #       expect { api.get_guild('Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
+    #     end
+
+    it "should return an instance of GuildNews when given valid parameters"
+    
+
+    it "should return an instance of FullGuild when given valid parameters" # do
+    #       FakeWeb.register_uri(:get, /guild-info\.xml.*Juggernaut/, :body => file_fixture('armory/guild-info/juggernaut_mal_ganis.xml'))
+    #       api.get_guild(:guild_name => 'Juggernaut', :realm => "Mal'Ganis").should be_kind_of(Wowr::Classes::FullGuild)
+    #     end
+
+    it "should raise GuildNotFound when given an invalid guild" # do
+    #       FakeWeb.register_uri(:get, /the-scryers\/\/guild-info\.xml/, :body => file_fixture('armory/guild-info/not_found.xml'))
+    #       expect { api.get_guild('does_not_exist', :realm => 'does_not_exist') }.to raise_error(Wowr::Exceptions::GuildNotFound)
+    #     end
+    
+  end
+
   describe "#login" do
     it "should raise NotImplementedError" do
       expect { api.login }.to raise_error(NotImplementedError)
@@ -421,8 +448,13 @@ describe Wowr::API::API do
       api.base_url(:login => true).should match(Wowr::API::API.login_base_url)
     end
 
+    it "should handle a battle_net option" do
+      api.base_url(:battle_net => true).should match(Wowr::API::API.battle_net_base_url)
+    end    
+
     it "should return a default when given no parameters" do
       api.base_url.should match(Wowr::API::API.armory_base_url)
     end
+
   end
 end

@@ -27,6 +27,7 @@ module Wowr
           @@cache_failed_requests = true
 
           cattr_reader :armory_base_url
+          cattr_reader :battle_net_base_url
           cattr_reader :login_base_url
           cattr_reader :login_url
           cattr_reader :persistent_cookie
@@ -53,8 +54,8 @@ module Wowr
 
         if (options[:login] == true)
           str += @@login_base_url
-        # elsif (options[:battle_net] == true)
-        #   str += @@battle_net_base_url
+        elsif (options[:battle_net] == true)
+          str += @@battle_net_base_url
         else
           str += @@armory_base_url
         end
