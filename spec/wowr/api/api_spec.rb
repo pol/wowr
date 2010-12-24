@@ -404,13 +404,13 @@ describe Wowr::API::API do
   end
 
   describe "#get_guild_news" do
-    it "should raise GuildNameNotSet when not given a name" # do
-    #       expect { api.get_guild_news({}) }.to raise_error(Wowr::Exceptions::GuildNameNotSet)
-    #     end
+    it "should raise GuildNameNotSet when not given a name" do
+      expect { api.get_guild_news({}) }.to raise_error(Wowr::Exceptions::GuildNameNotSet)
+    end
     
-    it "should raise RealmNotSet when given a guild name but not a realm" # do
-    #       expect { api.get_guild('Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
-    #     end
+    it "should raise RealmNotSet when given a guild name but not a realm" do
+      expect { api.get_guild('Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
+    end
 
     it "should return an instance of GuildNews when given valid parameters"
     
