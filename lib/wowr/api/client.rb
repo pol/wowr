@@ -97,6 +97,11 @@ module Wowr
         response = get_file(url, options)
         parser(response, options)
       end
+      
+      def get_html(url, options = {})
+        response = get_file(url, options)
+        Nokogiri::HTML(response)        
+      end
 
       def get_json(url, options = {})
         response = get_file(url, options)
