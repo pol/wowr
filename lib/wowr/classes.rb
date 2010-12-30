@@ -100,5 +100,8 @@ module Wowr
     class ItemCostToken    < Wowr::Armory::Item::CostToken;    end
     class ItemVendor       < Wowr::Armory::Item::Vendor;       end
     class ItemReagentFor   < Wowr::Armory::Item::ReagentFor;   end
+    
+    # Guild News
+    class GuildNews < Wowr::Armory::GuildNews::Base; end
   end
 end
