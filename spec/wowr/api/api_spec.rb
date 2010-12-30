@@ -31,7 +31,6 @@ describe Wowr::API::API, "class accessors" do
   its(:persistent_cookie)        { should eql('COM-warcraft') }
   its(:temporary_cookie)         { should eql('JSESSIONID') }
   its(:battle_net_base_url)      { should eql('us.battle.net/wow/en/') }
-  its(:guild_news_url)           { should eql('guild/%s/%s/news') }
 end
 
 describe Wowr::API::API, "initialization" do
@@ -402,6 +401,33 @@ describe Wowr::API::API do
     end
 
   end
+  
+  describe "#guild_news_url" do
+    
+    it "should raise GuildNameNotSet when not given a guild name" do
+      expect { api.guild_news_url(:realm => 'The Scryers') }.to raise_error(Wowr::Exceptions::GuildNameNotSet)
+    end
+    
+    it "should raise RealmNotSet when not given a realm" do
+      expect { api.guild_news_url(:guild_name => 'Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
+    end
+    
+    it "should return a url with the realm name properly formatted" do
+      # spaces to hyphens
+      api.guild_news_url(:realm => 'The Scryers', :guild_name => 'Rotten Luck').should =~ /the-scryers/
+      
+      # apostraphes are ignored
+      api.guild_news_url(:realm => "Mal'Ganis", :guild_name => 'Juggernaut').should =~ /malganis/
+      
+      # both should work
+      api.guild_news_url(:realm => "Lightning's Blade", :guild_name => 'Rotten Luck').should =~ /lightnings-blade/
+    end
+    
+    it "should return a url with the guild name url encoded" do
+      api.guild_news_url(:realm => 'The Scryers', :guild_name => 'Rotten Luck').should =~ /rotten\+luck/
+    end
+    
+  end
 
   describe "#get_guild_news" do
     it "should raise GuildNameNotSet when not given a name" do
@@ -409,11 +435,11 @@ describe Wowr::API::API do
     end
     
     it "should raise RealmNotSet when given a guild name but not a realm" do
-      expect { api.get_guild('Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
+      expect { api.get_guild_news(:guild_name => 'Foo') }.to raise_error(Wowr::Exceptions::RealmNotSet)
     end
 
     it "should return an instance of GuildNews when given valid parameters" do
-      FakeWeb.register_uri(:get, /guild\/the-scryers\/rotten%20luck/, :body => file_fixture('armory/guild-news/rotten_luck_the_scryers.xml'))
+      FakeWeb.register_uri(:get, /guild\/the-scryers\/rotten\+luck/, :body => file_fixture('armory/guild-news/rotten_luck_the_scryers.xml'))
       api.get_guild_news(:guild_name => 'Rotten Luck', :realm => "The Scryers").should be_kind_of(Wowr::Classes::GuildNews)
     end
 
